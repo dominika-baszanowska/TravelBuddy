@@ -1,0 +1,24 @@
+﻿@inject Radzen.DialogService DialogService
+
+<h2 class="display-5">@Country.Name's Most Popular Destinations</h2>
+
+<div class="list-group mb-3">
+    @foreach (var destination in Country.PopularDestinations)
+    {
+        <a href="#" class="list-group-item list-group-item-action">
+            @destination
+        </a>
+    }
+</div>
+
+<button class="btn btn-primary" @onclick="CloseDialog">Close</button>
+
+@code {
+    [Parameter]
+    public Country Country { get; set; }
+
+    void CloseDialog()
+    {
+        DialogService.Close();
+    }
+}
