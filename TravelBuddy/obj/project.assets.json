@@ -4209,25 +4209,25 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\alber\\.nuget\\packages\\": {}
+    "/Users/Albert/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\alber\\source\\repos\\TravelBuddy\\TravelBuddy\\TravelBuddy.csproj",
+      "projectUniqueName": "/Users/Albert/RiderProjects/TravelBuddy/TravelBuddy/TravelBuddy.csproj",
       "projectName": "TravelBuddy",
-      "projectPath": "C:\\Users\\alber\\source\\repos\\TravelBuddy\\TravelBuddy\\TravelBuddy.csproj",
-      "packagesPath": "C:\\Users\\alber\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\alber\\source\\repos\\TravelBuddy\\TravelBuddy\\obj\\",
+      "projectPath": "/Users/Albert/RiderProjects/TravelBuddy/TravelBuddy/TravelBuddy.csproj",
+      "packagesPath": "/Users/Albert/.nuget/packages/",
+      "outputPath": "/Users/Albert/RiderProjects/TravelBuddy/TravelBuddy/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\alber\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "/Users/Albert/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net7.0"
       ],
       "sources": {
-        "C:\\Program Files\\dotnet\\sdk\\7.0.306\\Sdks\\Microsoft.NET.Sdk.Web\\library-packs": {},
+        "/usr/local/share/dotnet/sdk/7.0.304/Sdks/Microsoft.NET.Sdk.Web/library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -4296,7 +4296,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.306\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/7.0.304/RuntimeIdentifierGraph.json"
       }
     }
   }
