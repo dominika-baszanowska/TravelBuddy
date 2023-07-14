@@ -33,6 +33,7 @@ public class Guide
 
     // Navigational properties
     public User User { get; set; }
+    public ICollection<Trip> Trips { get; set; }
 
     // Constructor
     public Guide()

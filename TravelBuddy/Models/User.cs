@@ -33,4 +33,7 @@ public class User
 
     // One-to-zero/one relationship with Guide entity
     public Guide GuideDetails { get; set; }
+    
+    // Navigational properties
+    public ICollection<Trip> Trips { get; set; }
 }
