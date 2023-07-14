@@ -116,6 +116,42 @@ namespace TravelBuddy.Migrations
                     b.ToTable("Languages");
                 });
 
+            modelBuilder.Entity("TravelBuddy.Models.Trip", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("GuideId")
+                        .HasColumnType("int");
+
+                    b.Property<float>("Rating")
+                        .HasColumnType("real");
+
+                    b.Property<string>("Review")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GuideId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Trips");
+                });
+
             modelBuilder.Entity("TravelBuddy.Models.User", b =>
                 {
                     b.Property<int>("Id")
@@ -185,10 +221,36 @@ namespace TravelBuddy.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("TravelBuddy.Models.Trip", b =>
+                {
+                    b.HasOne("TravelBuddy.Models.Guide", "Guide")
+                        .WithMany("Trips")
+                        .HasForeignKey("GuideId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("TravelBuddy.Models.User", "User")
+                        .WithMany("Trips")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Guide");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("TravelBuddy.Models.Guide", b =>
+                {
+                    b.Navigation("Trips");
+                });
+
             modelBuilder.Entity("TravelBuddy.Models.User", b =>
                 {
                     b.Navigation("GuideDetails")
                         .IsRequired();
+
+                    b.Navigation("Trips");
                 });
 #pragma warning restore 612, 618
         }

@@ -29,12 +29,14 @@ namespace TravelBuddy.Models
             modelBuilder.Entity<Trip>()
                 .HasOne(t => t.User)
                 .WithMany(u => u.Trips)
-                .HasForeignKey(t => t.UserId);
+                .HasForeignKey(t => t.UserId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Trip>()
                 .HasOne(t => t.Guide)
                 .WithMany(g => g.Trips)
-                .HasForeignKey(t => t.GuideId);
+                .HasForeignKey(t => t.GuideId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }
