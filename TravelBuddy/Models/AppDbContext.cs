@@ -9,6 +9,34 @@ namespace TravelBuddy.Models
         }
 
         public DbSet<Country> Countries { get; set; }
-        // Other DbSets...
+        public DbSet<User> Users { get; set; }
+        public DbSet<Guide> Guides { get; set; }
+        public DbSet<Language> Languages { get; set; }
+        public DbSet<Trip> Trips { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<User>()
+                .HasOne(u => u.GuideDetails)
+                .WithOne(g => g.User)
+                .HasForeignKey<Guide>(g => g.UserId);
+
+            modelBuilder.Entity<Guide>()
+                .HasMany(g => g.Languages)
+                .WithMany(l => l.Guides)
+                .UsingEntity(j => j.ToTable("GuideLanguages"));
+
+            modelBuilder.Entity<Trip>()
+                .HasOne(t => t.User)
+                .WithMany(u => u.Trips)
+                .HasForeignKey(t => t.UserId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Trip>()
+                .HasOne(t => t.Guide)
+                .WithMany(g => g.Trips)
+                .HasForeignKey(t => t.GuideId)
+                .OnDelete(DeleteBehavior.Restrict);
+        }
     }
 }
