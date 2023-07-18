@@ -1,5 +1,6 @@
 using TravelBuddy.Models;
 using Microsoft.EntityFrameworkCore;
+using TravelBuddy.Logic;
 
 var config = new ConfigurationBuilder()
     .AddJsonFile("appsettings.json")
@@ -20,6 +21,9 @@ else
     builder.Services.AddDbContext<AppDbContext>(options =>
         options.UseSqlServer(config.GetConnectionString("DefaultConnection")));
 }
+
+// Logic di
+builder.Services.AddScoped<GuideService>();
 
 var app = builder.Build();
 

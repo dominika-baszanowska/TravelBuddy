@@ -1,0 +1,31 @@
+﻿USE TravelBuddy;
+
+INSERT INTO Countries (Name, ShortDescription, Description, Flag, Capital, Continent, Rating)
+VALUES
+    ('Germany', 'Germany is a country in Central Europe.', 'Germany is known for its rich history, culture, and technological advancements.', 'fi fi-de', 'Berlin', 'Europe', 4.5),
+    ('France', 'France is a country in Western Europe.', 'France is famous for its art, cuisine, and historical landmarks.', 'fi fi-fr', 'Paris', 'Europe', 4.2),
+    ('Italy', 'Italy is a country in Southern Europe.', 'Italy is known for its beautiful landscapes, art, and cuisine.', 'fi fi-it', 'Rome', 'Europe', 4.3),
+    ('Spain', 'Spain is a country in Southwestern Europe.', 'Spain offers a rich cultural heritage, beautiful beaches, and vibrant cities.', 'fi fi-es', 'Madrid', 'Europe', 4.1),
+    ('United Kingdom', 'The United Kingdom is a country in Northwestern Europe.', 'The UK is known for its iconic landmarks, diverse culture, and historical significance.', 'fi fi-gb', 'London', 'Europe', 4.4),
+    ('Netherlands', 'The Netherlands is a country in Northwestern Europe.', 'The Netherlands is famous for its windmills, tulips, and cycling culture.', 'fi fi-nl', 'Amsterdam', 'Europe', 4.2),
+    ('Belgium', 'Belgium is a country in Western Europe.', 'Belgium is renowned for its chocolates, waffles, and medieval cities.', 'fi fi-be', 'Brussels', 'Europe', 4.0),
+    ('Sweden', 'Sweden is a country in Northern Europe.', 'Sweden is known for its stunning landscapes, innovative design, and high standard of living.', 'fi fi-se', 'Stockholm', 'Europe', 4.3),
+    ('Austria', 'Austria is a country in Central Europe.', 'Austria is famed for its alpine landscapes, classical music, and historical architecture.', 'fi fi-at', 'Vienna', 'Europe', 4.1),
+    ('Greece', 'Greece is a country in Southeastern Europe.', 'Greece is famous for its ancient history, stunning islands, and Mediterranean cuisine.', 'fi fi-gr', 'Athens', 'Europe', 4.5),
+    ('Portugal', 'Portugal is a country in Southern Europe.', 'Portugal is known for its beautiful coastline, historic cities, and delicious cuisine.', 'fi fi-pt', 'Lisbon', 'Europe', 4.2),
+    ('Denmark', 'Denmark is a country in Northern Europe.', 'Denmark is known for its modern design, bicycle culture, and historic castles.', 'fi fi-dk', 'Copenhagen', 'Europe', 4.0),
+    ('Finland', 'Finland is a country in Northern Europe.', 'Finland is renowned for its stunning natural beauty, saunas, and the Northern Lights.', 'fi fi-fi', 'Helsinki', 'Europe', 4.3),
+    ('Czech Republic', 'The Czech Republic is a country in Central Europe.', 'The Czech Republic offers beautiful architecture, rich history, and world-famous beer.', 'fi fi-cz', 'Prague', 'Europe', 4.1),
+    ('Poland', 'Poland is a country in Central Europe.', 'Poland is known for its medieval architecture, vibrant culture, and hearty cuisine.', 'fi fi-pl', 'Warsaw', 'Europe', 4.4),
+    ('Ireland', 'Ireland is a country in Northwestern Europe.', 'Ireland is famous for its stunning landscapes, friendly people, and rich cultural heritage.', 'fi fi-ie', 'Dublin', 'Europe', 4.2),
+    ('Romania', 'Romania is a country in Southeastern Europe.', 'Romania offers beautiful landscapes, fascinating history, and vibrant traditions.', 'fi fi-ro', 'Bucharest', 'Europe', 4.0),
+    ('Hungary', 'Hungary is a country in Central Europe.', 'Hungary is known for its stunning architecture, thermal baths, and rich cultural heritage.', 'fi fi-hu', 'Budapest', 'Europe', 4.3),
+    ('Slovakia', 'Slovakia is a country in Central Europe.', 'Slovakia offers beautiful landscapes, medieval castles, and charming towns.', 'fi fi-sk', 'Bratislava', 'Europe', 4.1),
+    ('Bulgaria', 'Bulgaria is a country in Southeastern Europe.', 'Bulgaria is known for its picturesque landscapes, ancient history, and vibrant festivals.', 'fi fi-bg', 'Sofia', 'Europe', 4.5),
+    ('Croatia', 'Croatia is a country in Southeastern Europe.', 'Croatia offers stunning Adriatic coastlines, historic cities, and beautiful national parks.', 'fi fi-hr', 'Zagreb', 'Europe', 4.2),
+    ('Estonia', 'Estonia is a country in Northern Europe.', 'Estonia is known for its advanced digital society, medieval architecture, and beautiful nature.', 'fi fi-ee', 'Tallinn', 'Europe', 4.0),
+    ('Lithuania', 'Lithuania is a country in Northern Europe.', 'Lithuania offers charming old towns, beautiful landscapes, and a rich cultural heritage.', 'fi fi-lt', 'Vilnius', 'Europe', 4.3),
+    ('Latvia', 'Latvia is a country in Northern Europe.', 'Latvia is known for its historic architecture, pristine nature, and vibrant arts scene.', 'fi fi-lv', 'Riga', 'Europe', 4.1),
+    ('Slovenia', 'Slovenia is a country in Central Europe.', 'Slovenia offers stunning alpine landscapes, charming towns, and a rich cultural heritage.', 'fi fi-si', 'Ljubljana', 'Europe', 4.4),
+    ('Malta', 'Malta is a country in Southern Europe.', 'Malta is famous for its historic sites, crystal-clear waters, and sunny Mediterranean climate.', 'fi fi-mt', 'Valletta', 'Europe', 4.2),
+    ('Luxembourg', 'Luxembourg is a country in Western Europe.', 'Luxembourg offers a mix of natural beauty, medieval castles, and a modern urban lifestyle.', 'fi fi-lu', 'Luxembourg City', 'Europe', 4.0);

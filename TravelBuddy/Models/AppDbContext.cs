@@ -8,11 +8,12 @@ namespace TravelBuddy.Models
         {
         }
 
-        public DbSet<Country> Countries { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Guide> Guides { get; set; }
         public DbSet<Language> Languages { get; set; }
         public DbSet<Trip> Trips { get; set; }
+        public DbSet<Country> Countries { get; set; }
+        public DbSet<City> Cities { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -36,6 +37,12 @@ namespace TravelBuddy.Models
                 .HasOne(t => t.Guide)
                 .WithMany(g => g.Trips)
                 .HasForeignKey(t => t.GuideId)
+                .OnDelete(DeleteBehavior.Restrict);
+            
+            modelBuilder.Entity<City>()
+                .HasOne(c => c.Country)
+                .WithMany(c => c.Cities)
+                .HasForeignKey(c => c.CountryId)
                 .OnDelete(DeleteBehavior.Restrict);
         }
     }

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TravelBuddy.Models;
 
@@ -11,9 +12,11 @@ using TravelBuddy.Models;
 namespace TravelBuddy.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230718190756_UpdateCountries")]
+    partial class UpdateCountries
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -35,34 +38,6 @@ namespace TravelBuddy.Migrations
                     b.HasIndex("LanguagesId");
 
                     b.ToTable("GuideLanguages", (string)null);
-                });
-
-            modelBuilder.Entity("TravelBuddy.Models.City", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("CountryId")
-                        .HasColumnType("int");
-
-                    b.Property<double>("Latitude")
-                        .HasColumnType("float");
-
-                    b.Property<double>("Longitude")
-                        .HasColumnType("float");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CountryId");
-
-                    b.ToTable("Cities");
                 });
 
             modelBuilder.Entity("TravelBuddy.Models.Country", b =>
@@ -257,17 +232,6 @@ namespace TravelBuddy.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("TravelBuddy.Models.City", b =>
-                {
-                    b.HasOne("TravelBuddy.Models.Country", "Country")
-                        .WithMany("Cities")
-                        .HasForeignKey("CountryId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Country");
-                });
-
             modelBuilder.Entity("TravelBuddy.Models.Guide", b =>
                 {
                     b.HasOne("TravelBuddy.Models.User", "User")
@@ -296,11 +260,6 @@ namespace TravelBuddy.Migrations
                     b.Navigation("Guide");
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("TravelBuddy.Models.Country", b =>
-                {
-                    b.Navigation("Cities");
                 });
 
             modelBuilder.Entity("TravelBuddy.Models.Guide", b =>

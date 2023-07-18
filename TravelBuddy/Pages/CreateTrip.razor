@@ -1,32 +1,44 @@
 ﻿@page "/CreateTrip"
 @using TravelBuddy.Shared
+@using TravelBuddy.Models
+@using TravelBuddy.Logic
+@using Microsoft.EntityFrameworkCore
 @inject Radzen.DialogService DialogService
+@inject GuideService GuideService
+@inject AppDbContext DbContext
 
+<div>
 <h1>Create a New Trip</h1>
 
 <p class="lead">Select a destination country:</p>
 
 <div style="max-height:300px; overflow-y:auto;" class="shadow-lg p-3 mb-5 bg-white rounded">
     <ul class="list-group">
-        @foreach (var country in MockData.EU_Countries)
-        {
-            <li class="list-group-item clickable" @onclick="() => SelectCountry(country)">
-                <span class="@country.Flag"></span>
-                <p style="display: inline-block">@country.Name</p>
-            </li>
+        @{
+            var countries = DbContext.Countries.ToList();
+                
+            foreach (var country in countries)
+            {
+                <li class="list-group-item clickable" @onclick="() => SelectCountry(country)">
+                    <span class="@country.Flag"></span>
+                    <p style="display: inline-block">@country.Name</p>
+                </li>
+            }
         }
     </ul>
 </div>
 
 <RadzenDialog />
 
-@code {
-    // Your code goes here
+</div>
 
+@code {
     void SelectCountry(Country country)
     {
-        var parameters = new Dictionary<string, object>();
-        parameters.Add("Country", country);
+        var parameters = new Dictionary<string, object>
+        {
+            { "Country", country }
+        };
 
         DialogService.OpenAsync<Shared.CountryDestinationDialog>("Popular Destinations", parameters);
     }

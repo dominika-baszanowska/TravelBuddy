@@ -1,14 +1,23 @@
-﻿@inject Radzen.DialogService DialogService
+﻿@using TravelBuddy.Models
+@inject Radzen.DialogService DialogService
+@inject AppDbContext DbContext;
 
-<h2 class="display-5">@Country.Name's Most Popular Destinations</h2>
+<h2>@Country.Name's Most Popular Destinations</h2>
 
-<div class="list-group mb-3">
-    @foreach (var destination in Country.PopularDestinations)
-    {
-        <a href="#" class="list-group-item list-group-item-action">
-            @destination
-        </a>
-    }
+<div style="max-height:300px; overflow-y:auto;" class="shadow-lg p-3 mb-5 bg-white rounded">
+    <ul class="list-group">
+        @{
+            var cities = DbContext.Cities.Where(x => x.CountryId == Country.Id).ToList();
+                    
+            foreach (var city in cities)
+            {
+                <li class="list-group-item clickable" @onclick="() => SearchGuide(city)">
+                    <span class="@city"></span>
+                    <p style="display: inline-block">@city.Name</p>
+                </li>
+            }
+        }
+    </ul>
 </div>
 
 <button class="btn btn-primary" @onclick="CloseDialog">Close</button>
@@ -17,6 +26,11 @@
     [Parameter]
     public Country Country { get; set; }
 
+    public void SearchGuide(City city)
+    {
+        
+    }
+    
     void CloseDialog()
     {
         DialogService.Close();

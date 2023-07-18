@@ -1,9 +1,31 @@
-﻿namespace TravelBuddy.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace TravelBuddy.Models;
+
+public class Country
 {
-    public class Country
-    {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public string Flag { get; set; }
-    }
+    [Key]
+    public int Id { get; set; }
+
+    [Required]
+    public string Name { get; set; }
+    
+    [Required]
+    public string ShortDescription { get; set; }
+    
+    [Required]
+    public string Description { get; set; }
+
+    [Required]
+    public string Flag { get; set; }
+
+    [Required]
+    public string Capital { get; set; }
+
+    [Required]
+    public string Continent { get; set; }
+    
+    public float Rating { get; set; }
+    
+    public List<City> Cities { get; set; }
 }
