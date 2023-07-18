@@ -9,7 +9,7 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace TravelBuddy.Logic;
 
-public class UserSecurity
+public class SecurityService
 {
     private const int SaltSize = 16; // 128 bit
     private const int KeySize = 32; // 256 bit
@@ -17,7 +17,7 @@ public class UserSecurity
 
     private AppDbContext _database;
 
-    public UserSecurity(AppDbContext database)
+    public SecurityService(AppDbContext database)
     {
         _database = database ?? throw new ArgumentNullException(nameof(database));
     }

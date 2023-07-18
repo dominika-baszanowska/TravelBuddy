@@ -24,6 +24,8 @@ else
 
 // Logic di
 builder.Services.AddScoped<GuideService>();
+builder.Services.AddScoped<TripService>();
+builder.Services.AddScoped<SecurityService>();
 
 var app = builder.Build();
 
