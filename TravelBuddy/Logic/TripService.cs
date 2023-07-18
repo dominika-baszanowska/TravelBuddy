@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Linq.Dynamic.Core;
+using Microsoft.EntityFrameworkCore;
 using Radzen;
 using TravelBuddy.Models;
 
@@ -12,6 +13,9 @@ public class TripService
     {
         _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
     }
+
+    public async Task<Trip> GetTrip(int tripId) =>
+        await _dbContext.Trips.Where(x => x.Id == tripId).SingleAsync();
 
     public async Task<Trip> CreateTrip(int userId, int guideId, int cityId, DateTime startDate, DateTime endDate)
     {
@@ -35,4 +39,7 @@ public class TripService
 
         return trip;
     }
+
+    public async Task DeleteTrip(int tripId) =>
+        await _dbContext.Trips.Where(x => x.Id == tripId).ExecuteDeleteAsync();
 }
