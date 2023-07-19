@@ -1,45 +1,98 @@
 ﻿@page "/CreateTrip"
-@using TravelBuddy.Shared
-@using TravelBuddy.Models
 @using TravelBuddy.Logic
-@using Microsoft.EntityFrameworkCore
-@inject Radzen.DialogService DialogService
+@using TravelBuddy.Models
+@inject CityService CityService
+@inject CountryService CountryService
 @inject GuideService GuideService
-@inject AppDbContext DbContext
 
-<div>
-<h1>Create a New Trip</h1>
-
-<p class="lead">Select a destination country:</p>
-
-<div style="max-height:300px; overflow-y:auto;" class="shadow-lg p-3 mb-5 bg-white rounded">
-    <ul class="list-group">
-        @{
-            var countries = DbContext.Countries.ToList();
-                
-            foreach (var country in countries)
-            {
-                <li class="list-group-item clickable" @onclick="() => SelectCountry(country)">
-                    <span class="@country.Flag"></span>
-                    <p style="display: inline-block">@country.Name</p>
-                </li>
-            }
-        }
-    </ul>
-</div>
-
-<RadzenDialog />
-
+<div class="main_container">
+    @FindCountries()
 </div>
 
 @code {
-    void SelectCountry(Country country)
-    {
-        var parameters = new Dictionary<string, object>
-        {
-            { "Country", country }
-        };
+    private const string NotVisible = "display: none";
 
-        DialogService.OpenAsync<Shared.CountryDestinationDialog>("Popular Destinations", parameters);
+    private string _countryVisible = "";
+    private string _cityVisible = "";
+    private string _guideVisible = "";
+    
+    void ToggleDivVisibility(ref string toChange)
+    {
+        toChange = toChange == NotVisible ? string.Empty : NotVisible;
+        StateHasChanged();
+    }
+    
+    private async Task FindCountries()
+    {
+        <div id="country_div" style="@_countryVisible">
+            <h2>Where would you like to go?</h2>
+            <div>
+                <p class="lead">Select a destination country:</p>
+                <ul class="country_list">
+                    @{
+                        var countries = await CountryService.GetCountries();
+
+                        foreach (var country in countries)
+                        {
+                            <li @onclick="() => FindCities(country)">
+                                <span class="@country.Flag"></span>
+                                <p style="display: inline-block">@country.Name</p>
+                            </li>
+                        }
+                    }
+                </ul>
+            </div>
+        </div>
+    }
+    
+    private async Task FindCities(Country country)
+    {
+        ToggleDivVisibility(ref _countryVisible);
+        
+        <div id="city_div" style="@_cityVisible">
+            <h2>Choose one of these most popular destinations in @country.Name!</h2>
+            <div>
+                <ul class="city_list">
+                    @{
+                        var cities = await CityService.GetCities(country.Id);
+                    
+                        foreach (var city in cities)
+                        {
+                            <li @onclick="() => FindGuides(city)">
+                                <p style="display: inline-block">@city.Name</p>
+                            </li>
+                        }
+                    }
+                </ul>
+            </div>
+        </div>
+    }
+
+    private async Task FindGuides(City city)
+    {
+        ToggleDivVisibility(ref _cityVisible);
+        
+        <div id="guide_div" style="@_guideVisible">
+            <h2>Perfect! Now choose your guide in @city.Name!</h2>
+            <div>
+                <ul class="guide_list">
+                    @{
+                        var guides = await GuideService.GetNearbyGuidesAsync(city.Latitude, city.Longitude);
+                        
+                        foreach (var guide in guides)
+                        {
+                            <li @onclick="() => ShowGuide(guide)">
+                                <p style="display: inline-block">@guide.User.FirstName @guide.User.LastName</p>
+                            </li>
+                        }
+                    }
+                </ul>
+            </div>
+        </div>
+    }
+
+    private async Task ShowGuide(Guide guide)
+    {
+        
     }
 }

@@ -14,11 +14,9 @@ public class GuideService
         _context = context;
     }
 
-    public async Task<List<Guide>> GetAllGuidesAsync()
-    {
-        return await _context.Guides.ToListAsync();
-    }
-    
+    public async Task<List<Guide>> GetAllGuidesAsync() => 
+        await _context.Guides.ToListAsync();
+
     public async Task<List<Guide>> GetNearbyGuidesAsync(double userLat, double userLon, double maxDistance = 30)
     {
         var allGuides = await _context.Guides.ToListAsync();
