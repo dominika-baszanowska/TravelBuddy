@@ -10,7 +10,6 @@ var config = new ConfigurationBuilder()
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
-builder.Services.AddScoped<Radzen.DialogService>();
 
 if (Environment.OSVersion.Platform == PlatformID.MacOSX)
 {
@@ -23,9 +22,11 @@ else
 }
 
 // Logic di
+builder.Services.AddScoped<SecurityService>();
+builder.Services.AddScoped<CountryService>();
+builder.Services.AddScoped<CityService>();
 builder.Services.AddScoped<GuideService>();
 builder.Services.AddScoped<TripService>();
-builder.Services.AddScoped<SecurityService>();
 
 var app = builder.Build();
 
