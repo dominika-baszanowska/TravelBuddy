@@ -12,9 +12,9 @@ public class CityService
         _context = context;
     }
 
-    public async Task<City> GetCity(int cityId) =>
-        await _context.Cities.Where(x => x.Id == cityId).SingleAsync();
+    public City GetCity(int cityId) =>
+        _context.Cities.Single(x => x.Id == cityId);
 
-    public async Task<List<City>> GetCities(int countryId) => 
-        await _context.Cities.Where(x => x.Id == countryId).ToListAsync();
+    public List<City> GetCities(int countryId) => 
+        _context.Cities.Where(x => x.CountryId == countryId).ToList();
 }

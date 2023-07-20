@@ -4,39 +4,23 @@
 @inject CityService CityService
 @inject CountryService CountryService
 @inject GuideService GuideService
+@inject AppDbContext AppDbContext
 
 <div class="main_container">
-    @FindCountries()
-</div>
-
-@code {
-        private const string NotVisible = "display: none";
-
-        private readonly string _countryVisible = "";
-        private readonly string _cityVisible = "";
-        private readonly string _guideVisible = "";
-}
-
-@{
-    void ToggleDivVisibility(ref string toChange)
-    {
-        toChange = toChange == NotVisible ? string.Empty : NotVisible;
-        StateHasChanged();
-    }
     
-    async Task FindCountries()
+    @if (_countriesVisible)
     {
-        <div id="country_div" style="@_countryVisible">
+        <div id="country_div" class="container">
             <h2>Where would you like to go?</h2>
             <div>
                 <p class="lead">Select a destination country:</p>
-                <ul class="country_list">
+                <ul class="list-group country_list">
                     @{
-                        var countries = await CountryService.GetCountries();
+                        var countries = CountryService.GetCountries();
 
                         foreach (var country in countries)
                         {
-                            <li @onclick="() => FindCities(country)">
+                            <li class="list-group-item" @onclick="() => FindCities(country)">
                                 <span class="@country.Flag"></span>
                                 <p style="display: inline-block">@country.Name</p>
                             </li>
@@ -47,20 +31,16 @@
         </div>
     }
     
-    async Task FindCities(Country country)
+    @if (_citiesVisible)
     {
-        //ToggleDivVisibility(ref _countryVisible);
-        
-        <div id="city_div" style="@_cityVisible">
-            <h2>Choose one of these most popular destinations in @country.Name!</h2>
+        <div id="city_div" class="container">
+            <h2>Choose one of these most popular destinations in @_countryName!</h2>
             <div>
-                <ul class="city_list">
+                <ul class="list-group city_list">
                     @{
-                        var cities = await CityService.GetCities(country.Id);
-                    
-                        foreach (var city in cities)
+                        foreach (var city in _cities)
                         {
-                            <li @onclick="() => FindGuides(city)">
+                            <li class="list-group-item" @onclick="() => FindGuides(city)">
                                 <p style="display: inline-block">@city.Name</p>
                             </li>
                         }
@@ -69,31 +49,62 @@
             </div>
         </div>
     }
-
-    async Task FindGuides(City city)
-    {
-        //ToggleDivVisibility(ref _cityVisible);
-        
-        <div id="guide_div" style="@_guideVisible">
-            <h2>Perfect! Now choose your guide in @city.Name!</h2>
-            <div>
-                <ul class="guide_list">
-                    @{
-                        var guides = await GuideService.GetNearbyGuidesAsync(city.Latitude, city.Longitude);
-                        
-                        foreach (var guide in guides)
-                        {
-                            <li @onclick="() => ShowGuide(guide)">
-                                <p style="display: inline-block">@guide.User.FirstName @guide.User.LastName</p>
-                            </li>
+    
+        @if (_guidesVisible)
+        {
+            <div id="guide_div" class="container">
+                <h2>Perfect! Now choose your guide in @_cityName!</h2>
+                <div>
+                    <ul class="list-group guide_list">
+                        @{
+                            foreach (var guide in _guides)
+                            {
+                                <li class="list-group-item" @onclick="() => ShowGuide(guide)">
+                                    <p style="display: inline-block">@guide.User.FirstName @guide.User.LastName</p>
+                                </li>
+                            }
                         }
-                    }
-                </ul>
+                    </ul>
+                </div>
             </div>
-        </div>
+        }
+</div>
+
+@code {
+
+    bool _countriesVisible = true;
+    bool _citiesVisible = false;
+    bool _guidesVisible = false;
+    List<City> _cities = new();
+    List<Guide> _guides = new();
+    string _countryName = string.Empty;
+    string _cityName = string.Empty;
+    
+    void FindCities(Country country)
+    {
+        //ToggleDivVisibility(ref _countryVisible);
+        
+        _cities = CityService.GetCities(country.Id);
+
+        _countryName = country.Name;
+        
+        _countriesVisible = false;
+        _citiesVisible = true;
+        _guidesVisible = false;
     }
 
-    async Task ShowGuide(Guide guide)
+    void FindGuides(City city)
+    {
+        _guides = GuideService.GetNearbyGuides(city.Latitude, city.Longitude, 100000);
+        
+        _cityName = city.Name;
+        
+        _countriesVisible = false;
+        _citiesVisible = false;
+        _guidesVisible = true;
+    }
+    
+    void ShowGuide(Guide guide)
     {
         
     }

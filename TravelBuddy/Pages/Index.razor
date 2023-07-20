@@ -3,56 +3,113 @@
 <div class="jumbotron">
   <head>
     <style>
-        body {
-          margin: 0;
-          padding: 0;
-        }
+    body, html {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .content-wrap {
+      flex: 1 0 auto;
+    }
+
+    .faded-image-1 {
+      position: relative;
+      width: 100%;
+      height: 50vh;
+      background-image:
+       linear-gradient(
+             rgba(0, 0, 0, 0.2),
+             rgba(0, 0, 0, 0.2)
+           ),
+           url('res/stock/pexels-pixabay-161815.jpg');
+      background-position: center;
+      background-size: cover;
+    }
     
-        .faded-image {
-          position: relative;
-          width: 100%;
-          height: 100vh;
-          background-image: url('res/travelBackground.jpg');
-          background-position: center;
-          background-size: cover;
-          opacity: 0.7;
-        }
-    
-        .faded-image::before {
-          content: "";
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          background-color: #000;
-          opacity: 0.4;
-        }
-    
-        .faded-image-text {
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%, -50%);
-          color: white;
-          font-size: 24px;
-          text-align: center;
-        }
+    .faded-image-2 {
+      position: relative;
+      width: 100%;
+      height: 50vh;
+      background-image:
+       linear-gradient(
+             rgba(0, 0, 0, 0.2),
+             rgba(0, 0, 0, 0.2)
+           ),
+           url('res/stock/pexels-william-fortunato-6140458.jpg');
+      background-position: center;
+      background-size: cover;
+    }
+
+    .faded-image::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: #000;
+      opacity: 0.4;
+    }
+
+    .faded-image-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: white;
+      font-size: 24px;
+      text-align: center;
+    }
+
+    .call-to-action {
+      background-color: #f8f9fa;
+      padding: 60px 0;
+      text-align: center;
+    }
+
+    .about-section {
+      padding: 60px 0;
+      text-align: center;
+    }
+
+    footer {
+      background-color: #343a40;
+      color: #fff;
+      padding: 40px 0;
+      text-align: center;
+      flex-shrink: 0;
+    }
       </style>
     </head>
   <body>
-  <div class="faded-image">
-    <div class="faded-image-text">
-      <h1 class="display-4">Welcome to TravelBuddy!</h1>
-      <p class="lead">Your ultimate guide to Europe travel.</p>
+  <div class="faded-image-1">
+    <div class="faded-image-text" style="background-color: #f8f9fa;">
+      <h1 class="display-4" style="font-size: 92px">Welcome to TravelBuddy!</h1>
+      &nbsp;
+      <p class="lead" style="font-size: 36px">Your ultimate guide to Europe travel.</p>
     </div>
   </div>
-  </body>
+
+  <div class="about-section">
+    <div class="container">
+      <h2 class="display-4">Discover Europe Like Never Before</h2>
+      <p class="lead">With TravelBuddy, you get access to our curated travel guides, tips from locals, and personalised itinerary suggestions to make your European journey unforgettable.</p>
+    </div>
+  </div>
   
-   <!-- </html>
-    <h1 class="display-4">Welcome to TravelBuddy!</h1>
-    <p class="lead">Your ultimate guide to Europe travel.</p>
-    <hr class="my-4">
-    <p>Start by creating a new trip and choose your destination.</p>
-    <a class="btn btn-primary btn-lg" href="CreateTrip" role="button">Create New Trip</a> -->
+  <div class="faded-image-2"></div>
+  &nbsp;&nbsp;
+  
+  <div class="call-to-action">
+    <div class="container">
+      <h2 class="display-4">Start Your Adventure Now</h2>
+      <p class="lead">Choose your destination and let us help you explore Europe in a whole new way.</p>
+      <a class="btn btn-primary btn-lg" href="CreateTrip" role="button">Create Your Dream Adventure</a>
+    </div>
+  </div>
+  &nbsp;&nbsp;
+  </body>
 </div>

@@ -12,6 +12,9 @@ public class CountryService
         _context = context;
     }
 
-    public async Task<List<Country>> GetCountries() =>
-        await _context.Countries.ToListAsync();
+    public List<Country> GetCountries()
+    {
+        return _context.Countries.ToList();
+    }
+
 }

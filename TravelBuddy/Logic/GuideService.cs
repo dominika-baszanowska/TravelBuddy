@@ -14,12 +14,13 @@ public class GuideService
         _context = context;
     }
 
-    public async Task<List<Guide>> GetAllGuidesAsync() => 
-        await _context.Guides.ToListAsync();
+    public List<Guide> GetAllGuidesAsync() => 
+        _context.Guides.ToList();
 
-    public async Task<List<Guide>> GetNearbyGuidesAsync(double userLat, double userLon, double maxDistance = 30)
+    public List<Guide> GetNearbyGuides(double userLat, double userLon, double maxDistance = 30)
     {
-        var allGuides = await _context.Guides.ToListAsync();
+        var dummy = _context.Users.Where(x => x.GuideDetails != null).ToList();
+        var allGuides = _context.Guides.ToList();
         var nearbyGuides = new List<Guide>();
 
         foreach (var guide in allGuides)
