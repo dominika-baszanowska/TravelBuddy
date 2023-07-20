@@ -24,4 +24,11 @@
     <Folder Include="Migrations\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="wwwroot\res\stock\pexels-chait-goli-1796736.jpg" />
+    <_ContentIncludedByDefault Remove="wwwroot\res\stock\pexels-matheus-bertelli-12446334.jpg" />
+    <_ContentIncludedByDefault Remove="wwwroot\res\stock\pexels-pixabay-161815.jpg" />
+    <_ContentIncludedByDefault Remove="wwwroot\res\stock\pexels-william-fortunato-6140458.jpg" />
+  </ItemGroup>
+
 </Project>
