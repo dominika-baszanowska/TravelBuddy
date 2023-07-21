@@ -5,6 +5,7 @@
 @inject CityService CityService
 @inject CountryService CountryService
 @inject GuideService GuideService
+@inject TripService TripService
 @inject AppDbContext AppDbContext
 
 <style>
@@ -89,19 +90,23 @@
                 <div class="container">
             <div class="row justify-content-center mt-5">
                 <div class="col-md-6">
-                    <h1 class="text-center mb-4">Register</h1>
+                    <h1 class="text-center mb-4">Book your guide in @_cityName!</h1>
                     <div class="card">
                         <div class="card-body">
                             <div class="form-group mb-3">
-                                <label for="firstName">First Name</label>
-                                <input type="text" class="form-control" id="firstName" @bind="_cityName" required>
+                                <label for="startDate">Start Date</label>
+                                <input type="date" class="form-control" id="startDate" @bind="_startDate" required>
                             </div>
                             <div class="form-group mb-3">
-                                <label for="lastName">Last Name</label>
-                                <input type="text" class="form-control" id="lastName" @bind="_cityName" required>
+                                <label for="endDate">End Date</label>
+                                <input type="date" class="form-control" id="endDate" @bind="_endDate" required>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="comments">Comments</label>
+                                <input type="text" class="form-control" id="comments" @bind="_comments">
                             </div>
                             <div class="d-grid gap-2">
-                                <button class="btn btn-primary" @onclick="CreateTripWithGuideDetails">Register</button>
+                                <button class="btn btn-primary" @onclick="CreateTripWithGuideDetails">Book Guide</button>
                             </div>
                         </div>
                     </div>
@@ -126,39 +131,44 @@
     List<Guide> _guides = new();
     string _countryName = string.Empty;
     string _cityName = string.Empty;
-    
+    int _cityId;
+
+    int _selectedGuideId;
+    DateTime _startDate = DateTime.Now;
+    DateTime _endDate = DateTime.Now.AddDays(3);
+    string _comments;
+
     void FindCities(Country country)
     {
-        //ToggleDivVisibility(ref _countryVisible);
-        
         _cities = CityService.GetCities(country.Id);
 
         _countryName = country.Name;
         
         _countriesVisible = false;
         _citiesVisible = true;
-        _guidesVisible = false;
     }
 
     void FindGuides(City city)
     {
         _guides = GuideService.GetNearbyGuides(city.Latitude, city.Longitude, 100000);
-        
+
+        _cityId = city.Id;
         _cityName = city.Name;
         
-        _countriesVisible = false;
         _citiesVisible = false;
         _guidesVisible = true;
     }
     
     void ShowCreateTrip(Guide guide)
     {
+        _selectedGuideId = guide.UserId;
         
+        _guidesVisible = false;
+        _createTripVisible = true;
     }
 
     void CreateTripWithGuideDetails()
     {
-        CreateTripModel trip;
-        return;
+        var trip = TripService.CreateTrip(1004, _selectedGuideId, _cityId, _startDate, _endDate, _comments);
     }
 }

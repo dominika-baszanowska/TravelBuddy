@@ -12,25 +12,27 @@ public class TripService
         _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
     }
 
-    public async Task<Trip> GetTrip(int tripId) =>
-        await _dbContext.Trips.Where(x => x.Id == tripId).SingleAsync();
+    public Trip GetTrip(int tripId) =>
+        _dbContext.Trips.Single(x => x.Id == tripId);
 
-    public async Task<Trip> CreateTrip(int userId, int guideId, int cityId, DateTime startDate, DateTime endDate)
+    public Trip CreateTrip(int userId, int guideId, int cityId, DateTime startDate, DateTime endDate, 
+        string comments)
     {
         var trip = new Trip
         {
             UserId = userId,
             GuideId = guideId,
             StartDate = startDate,
-            EndDate = endDate
+            EndDate = endDate,
+            Comments = comments
         };
 
-        await _dbContext.Trips.AddAsync(trip);
-        await _dbContext.SaveChangesAsync();
+        _dbContext.Trips.Add(trip);
+        _dbContext.SaveChanges();
 
         return trip;
     }
 
-    public async Task DeleteTrip(int tripId) =>
-        await _dbContext.Trips.Where(x => x.Id == tripId).ExecuteDeleteAsync();
+    public void DeleteTrip(int tripId) =>
+        _dbContext.Trips.Where(x => x.Id == tripId).ExecuteDelete();
 }
