@@ -4,15 +4,15 @@
 @using TravelBuddy.Shared
 @inject UserService UserService
 
-@if (_registerVisible)
-{
-    <div class="container">
-        <div class="row justify-content-center mt-5">
-            <div class="col-md-6">
-                <h1 class="text-center mb-4">Register</h1>
-                <div class="card">
-                    <div class="card-body">
-                        <form>
+<div class="main_container">
+    @if (_registerVisible)
+    {
+        <div class="container">
+            <div class="row justify-content-center mt-5">
+                <div class="col-md-6">
+                    <h1 class="text-center mb-4">Register</h1>
+                    <div class="card">
+                        <div class="card-body">
                             <div class="form-group mb-3">
                                 <label for="firstName">First Name</label>
                                 <input type="text" class="form-control" id="firstName" @bind="_firstName" required>
@@ -40,22 +40,32 @@
                             <div class="d-grid gap-2">
                                 <button class="btn btn-primary" @onclick="RegisterUser">Register</button>
                             </div>
-                        </form>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-}
+    }
 
-@if (_successVisible)
-{
-    <div class="container">
-        <h1>Registration successful!</h1>
-        <p>@_registrationName welcome to the world of exploration!</p>
-        <button type="button" class="btn btn-primary" onclick="location.href='Login'">Go to login!</button>
-    </div>
-}
+    @if (_successVisible)
+    {
+        <div class="container">
+            <div class="row justify-content-center mt-5">
+                <div class="col-md-6">
+                    <h1 class="text-center mb-4">Registration successful!</h1>
+                    <div class="card">
+                        <div class="card-body">
+                            <p style="font-size: 20px">@_registrationName welcome to the world of exploration!</p>
+                            <div class="d-grid gap-2">
+                                <button type="button" class="btn btn-primary" onclick="location.href='Login'">Go To Login!</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
 
 &nbsp;
 &nbsp;
@@ -80,5 +90,6 @@
 
         _registrationName = user.FirstName;
         _successVisible = true;
+        _registerVisible = false;
     }
 }

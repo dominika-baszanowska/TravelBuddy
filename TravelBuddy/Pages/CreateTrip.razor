@@ -50,25 +50,29 @@
         </div>
     }
     
-        @if (_guidesVisible)
-        {
-            <div id="guide_div" class="container">
-                <h2>Perfect! Now choose your guide in @_cityName!</h2>
-                <div>
-                    <ul class="list-group guide_list">
-                        @{
-                            foreach (var guide in _guides)
-                            {
-                                <li class="list-group-item" @onclick="() => ShowGuide(guide)">
-                                    <p style="display: inline-block">@guide.User.FirstName @guide.User.LastName</p>
-                                </li>
-                            }
+    @if (_guidesVisible)
+    {
+        <div id="guide_div" class="container">
+            <h2>Perfect! Now choose your guide in @_cityName!</h2>
+            <div>
+                <ul class="list-group guide_list">
+                    @{
+                        foreach (var guide in _guides)
+                        {
+                            <li class="list-group-item" @onclick="() => ShowGuide(guide)">
+                                <p style="display: inline-block">@guide.User.FirstName @guide.User.LastName</p>
+                            </li>
                         }
-                    </ul>
-                </div>
+                    }
+                </ul>
             </div>
-        }
+        </div>
+    }
 </div>
+  
+  &nbsp;
+  &nbsp;
+  
 
 @code {
 
