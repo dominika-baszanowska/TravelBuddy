@@ -14,6 +14,9 @@ public class UserService
         _security = security ?? throw new ArgumentNullException(nameof(security));
     }
 
+    public User GetUser(int userId) =>
+        _dbContext.Users.Single(x => x.Id == userId);
+
     public User CreateUser(RegisterUser registerUser)
     {
         var user = new User

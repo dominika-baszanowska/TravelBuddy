@@ -1,0 +1,57 @@
+﻿@page "/User"
+@using TravelBuddy.Logic
+@inject UserService UserService
+
+@{
+    GetUser(1002);
+}
+
+<div class="main_container">
+    <div class="container">
+        <div class="row justify-content-center mt-5">
+            <div class="col-md-6">
+                <h1 class="text-center mb-4">Welcome @_firstName!</h1>
+                <div class="card">
+                    <div class="card-body">
+                        <div class="col-md-4">
+                            <img id="profile-picture" src="@_profilePicture" class="img-thumbnail mb-3" alt="Profile Picture">
+                        </div>
+                        <p><strong>First Name:</strong> <span id="first-name">@_firstName</span></p>
+                        <p><strong>Last Name:</strong> <span id="last-name">@_lastName</span></p>
+                        <p><strong>Email:</strong> <span id="email">@_email</span></p>
+                        <p><strong>Phone Number:</strong> <span id="phone-number">@_phoneNumber</span></p>
+                        <p><strong>Registration Date:</strong> <span id="registration-date">@_registrationDate</span></p>
+                        <div class="d-grid gap-2">
+                            <button type="button" class="btn btn-primary" onclick="location.href='Login'">Save Changes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+&nbsp;
+&nbsp;
+
+@code {
+    private string _firstName;
+    private string _lastName;
+    private string _email;
+    private string _phoneNumber;
+    private string _profilePicture;
+    private string _registrationDate;
+    
+    void GetUser(int userId)
+    {
+        var user = UserService.GetUser(userId);
+        
+        _firstName = user.FirstName;
+        _lastName = user.LastName;
+        _email = user.Email;
+        _phoneNumber = user.PhoneNumber;
+        _profilePicture = user.ProfilePicture;
+        _registrationDate = user.CreatedAt.ToLocalTime().Date.ToShortDateString();
+    }
+
+}
