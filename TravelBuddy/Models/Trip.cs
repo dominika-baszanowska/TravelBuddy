@@ -25,9 +25,9 @@ public class Trip
     
     public string Comments { get; set; }
 
-    public string Review { get; set; }
+    public string? Review { get; set; }
 
-    public float Rating { get; set; }
+    public float? Rating { get; set; }
 
     // Navigational properties
     public User User { get; set; }

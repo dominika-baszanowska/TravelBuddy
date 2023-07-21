@@ -95,11 +95,15 @@
                         <div class="card-body">
                             <div class="form-group mb-3">
                                 <label for="startDate">Start Date</label>
-                                <input type="date" class="form-control" id="startDate" @bind="_startDate" required>
+                                <input type="date" class="form-control" id="startDate" @bind="StartDate" required>
                             </div>
                             <div class="form-group mb-3">
                                 <label for="endDate">End Date</label>
-                                <input type="date" class="form-control" id="endDate" @bind="_endDate" required>
+                                <input type="date" class="form-control" id="endDate" @bind="EndDate" required>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="price">Guide Price @_selectedGuide.CurrencyIso</label>
+                                <input type="text" class="form-control" id="price" @bind="_tripPrice" disabled>
                             </div>
                             <div class="form-group mb-3">
                                 <label for="comments">Comments</label>
@@ -133,10 +137,33 @@
     string _cityName = string.Empty;
     int _cityId;
 
-    int _selectedGuideId;
-    DateTime _startDate = DateTime.Now;
+    Guide _selectedGuide;
+
+    private DateTime _startDate = DateTime.Now;
+    DateTime StartDate
+    {
+        get => _startDate;
+        set
+        {
+            _startDate = value;
+            CalculateGuidePrice();
+        }
+    }
+    
     DateTime _endDate = DateTime.Now.AddDays(3);
-    string _comments;
+    DateTime EndDate
+    {
+        get => _endDate;
+        set
+        {
+            _endDate = value;
+            CalculateGuidePrice();
+        }
+    }
+    
+    string _comments = string.Empty;
+
+    decimal _tripPrice = 0;
 
     void FindCities(Country country)
     {
@@ -161,14 +188,29 @@
     
     void ShowCreateTrip(Guide guide)
     {
-        _selectedGuideId = guide.UserId;
+        _selectedGuide = guide;
         
         _guidesVisible = false;
         _createTripVisible = true;
+
+        CalculateGuidePrice();
     }
 
     void CreateTripWithGuideDetails()
     {
-        var trip = TripService.CreateTrip(1004, _selectedGuideId, _cityId, _startDate, _endDate, _comments);
+        var trip = TripService.CreateTrip(1002, _selectedGuide.UserId, _cityId, StartDate, _endDate, _comments);
+    }
+
+    void CalculateGuidePrice()
+    {
+        var timeSpan = _endDate - StartDate;
+
+        var days = (decimal)Math.Round(timeSpan.TotalDays, MidpointRounding.AwayFromZero);
+        
+        if (days == 0 || _selectedGuide.PricePerHour == 0 || _selectedGuide.IsVolunteer) _tripPrice = 0;
+
+        var result = days * _selectedGuide.PricePerHour * 4;
+        
+        _tripPrice = result < 0 ? 0 : result;
     }
 }
