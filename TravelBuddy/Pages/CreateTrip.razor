@@ -12,7 +12,7 @@
     {
         <div id="country_div" class="container">
             <h2>Where would you like to go?</h2>
-            <div>
+            <div style="height: 900px; overflow-y: auto;">
                 <p class="lead">Select a destination country:</p>
                 <ul class="list-group country_list">
                     @{
@@ -35,7 +35,7 @@
     {
         <div id="city_div" class="container">
             <h2>Choose one of these most popular destinations in @_countryName!</h2>
-            <div>
+            <div style="height: 900px; overflow-y: auto;">
                 <ul class="list-group city_list">
                     @{
                         foreach (var city in _cities)
@@ -54,7 +54,7 @@
     {
         <div id="guide_div" class="container">
             <h2>Perfect! Now choose your guide in @_cityName!</h2>
-            <div>
+            <div style="height: 900px; overflow-y: auto;">
                 <ul class="list-group guide_list">
                     @{
                         foreach (var guide in _guides)
