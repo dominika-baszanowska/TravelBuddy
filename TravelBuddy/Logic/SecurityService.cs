@@ -22,7 +22,7 @@ public class SecurityService
         _database = database ?? throw new ArgumentNullException(nameof(database));
     }
 
-    private static string HashPassword(string password)
+    public static string HashPassword(string password)
     {
         using var algorithm = new Rfc2898DeriveBytes(
             password,

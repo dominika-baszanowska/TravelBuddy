@@ -27,6 +27,7 @@ builder.Services.AddScoped<CountryService>();
 builder.Services.AddScoped<CityService>();
 builder.Services.AddScoped<GuideService>();
 builder.Services.AddScoped<TripService>();
+builder.Services.AddScoped<UserService>();
 
 var app = builder.Build();
 

@@ -1,0 +1,84 @@
+﻿@page "/Register"
+@using TravelBuddy.Logic
+@using TravelBuddy.Models
+@using TravelBuddy.Shared
+@inject UserService UserService
+
+@if (_registerVisible)
+{
+    <div class="container">
+        <div class="row justify-content-center mt-5">
+            <div class="col-md-6">
+                <h1 class="text-center mb-4">Register</h1>
+                <div class="card">
+                    <div class="card-body">
+                        <form>
+                            <div class="form-group mb-3">
+                                <label for="firstName">First Name</label>
+                                <input type="text" class="form-control" id="firstName" @bind="_firstName" required>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="lastName">Last Name</label>
+                                <input type="text" class="form-control" id="lastName" @bind="_lastName" required>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="email">Email Address</label>
+                                <input type="email" class="form-control" id="email" @bind="_email" required>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="phoneNumber">Phone Number</label>
+                                <input type="text" class="form-control" id="phoneNumber" @bind="_phoneNumber" required>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="password">Password</label>
+                                <input type="password" class="form-control" id="password" @bind="_password" required>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="profilePicture">Profile Picture URL (optional)</label>
+                                <input type="text" class="form-control" id="profilePicture" @bind="_profilePicture" required>
+                            </div>
+                            <div class="d-grid gap-2">
+                                <button class="btn btn-primary" @onclick="RegisterUser">Register</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@if (_successVisible)
+{
+    <div class="container">
+        <h1>Registration successful!</h1>
+        <p>@_registrationName welcome to the world of exploration!</p>
+        <button type="button" class="btn btn-primary" onclick="location.href='Login'">Go to login!</button>
+    </div>
+}
+
+&nbsp;
+&nbsp;
+
+@code {
+    bool _registerVisible = true;
+    bool _successVisible = false;
+    string _registrationName = "Myc";
+
+    private string _firstName;
+    private string _lastName;
+    private string _email;
+    private string _phoneNumber;
+    private string _password;
+    private string _profilePicture;
+    
+    void RegisterUser()
+    {
+        var registerUser = new RegisterUser(_firstName, _lastName, _email, _phoneNumber, _password, _profilePicture);
+
+        var user = UserService.CreateUser(registerUser);
+
+        _registrationName = user.FirstName;
+        _successVisible = true;
+    }
+}
