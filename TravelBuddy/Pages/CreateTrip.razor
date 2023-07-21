@@ -1,13 +1,14 @@
 ﻿@page "/CreateTrip"
 @using TravelBuddy.Logic
 @using TravelBuddy.Models
+@using TravelBuddy.Shared
 @inject CityService CityService
 @inject CountryService CountryService
 @inject GuideService GuideService
 @inject AppDbContext AppDbContext
 
 <style>
-    p {
+    .p-list-item {
         color: black;
         font-size: 20px;
         display: inline-block; 
@@ -33,7 +34,8 @@
                         {
                             <li class="list-group-item" @onclick="() => FindCities(country)">
                                 <span class="@country.Flag"></span>
-                                <p style="display: inline-block">@country.Name</p>
+                                <p class="p-list-item" style="color: orange">&#9733 @country.Rating</p>
+                                <p class="p-list-item">@country.Name</p>
                             </li>
                         }
                     }
@@ -52,7 +54,7 @@
                         foreach (var city in _cities)
                         {
                             <li class="list-group-item" @onclick="() => FindGuides(city)">
-                                <p style="display: inline-block">@city.Name</p>
+                                <p class="p-list-item">@city.Name</p>
                             </li>
                         }
                     }
@@ -70,14 +72,40 @@
                     @{
                         foreach (var guide in _guides)
                         {
-                            <li class="list-group-item" @onclick="() => ShowGuide(guide)">
-                                <img src="@guide.User.ProfilePicture" style="width: 40px; height: 40px; border: solid black 2px;"/>
-                                <p style="">@guide.User.FirstName @guide.User.LastName</p>
-                                
+                            <li class="list-group-item" @onclick="() => ShowCreateTrip(guide)">
+                                <img src="@guide.User.ProfilePicture" alt="Guide Profile Picture" style="width: 40px; height: 40px; border: solid black 2px;"/>
+                                <p class="p-list-item" style="color: orange">&#9733 @guide.Rating</p>
+                                <p class="p-list-item">@guide.User.FirstName @guide.User.LastName</p>
                             </li>
                         }
                     }
                 </ul>
+            </div>
+        </div>
+    }
+    
+    @if (_createTripVisible)
+    {
+                <div class="container">
+            <div class="row justify-content-center mt-5">
+                <div class="col-md-6">
+                    <h1 class="text-center mb-4">Register</h1>
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="form-group mb-3">
+                                <label for="firstName">First Name</label>
+                                <input type="text" class="form-control" id="firstName" @bind="_cityName" required>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="lastName">Last Name</label>
+                                <input type="text" class="form-control" id="lastName" @bind="_cityName" required>
+                            </div>
+                            <div class="d-grid gap-2">
+                                <button class="btn btn-primary" @onclick="CreateTripWithGuideDetails">Register</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     }
@@ -92,6 +120,8 @@
     bool _countriesVisible = true;
     bool _citiesVisible = false;
     bool _guidesVisible = false;
+    bool _createTripVisible = false;
+    
     List<City> _cities = new();
     List<Guide> _guides = new();
     string _countryName = string.Empty;
@@ -121,8 +151,14 @@
         _guidesVisible = true;
     }
     
-    void ShowGuide(Guide guide)
+    void ShowCreateTrip(Guide guide)
     {
         
+    }
+
+    void CreateTripWithGuideDetails()
+    {
+        CreateTripModel trip;
+        return;
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace TravelBuddy.Shared;
 
-public record RegisterUser(string FirstName,
+public record CreateUserModel(string FirstName,
     string LastName,
     string Email,
     string PhoneNumber,

@@ -83,7 +83,7 @@
     
     void RegisterUser()
     {
-        var registerUser = new RegisterUser(_firstName, _lastName, _email, _phoneNumber, _password, _profilePicture);
+        var registerUser = new CreateUserModel(_firstName, _lastName, _email, _phoneNumber, _password, _profilePicture);
 
         var user = UserService.CreateUser(registerUser);
 

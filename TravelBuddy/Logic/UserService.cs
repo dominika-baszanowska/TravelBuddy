@@ -17,16 +17,16 @@ public class UserService
     public User GetUser(int userId) =>
         _dbContext.Users.Single(x => x.Id == userId);
 
-    public User CreateUser(RegisterUser registerUser)
+    public User CreateUser(CreateUserModel createTripModel)
     {
         var user = new User
         {
-            FirstName = registerUser.FirstName,
-            LastName = registerUser.LastName,
-            Email = registerUser.Email,
-            PhoneNumber = registerUser.PhoneNumber,
-            PasswordHash = SecurityService.HashPassword(registerUser.Password),
-            ProfilePicture = registerUser.ProfilePicture,
+            FirstName = createTripModel.FirstName,
+            LastName = createTripModel.LastName,
+            Email = createTripModel.Email,
+            PhoneNumber = createTripModel.PhoneNumber,
+            PasswordHash = SecurityService.HashPassword(createTripModel.Password),
+            ProfilePicture = createTripModel.ProfilePicture,
             CreatedAt = DateTime.UtcNow,
         };
 

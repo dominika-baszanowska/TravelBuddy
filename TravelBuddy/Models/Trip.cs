@@ -22,6 +22,8 @@ public class Trip
 
     [Required]
     public DateTime EndDate { get; set; }
+    
+    public string Comments { get; set; }
 
     public string Review { get; set; }
 
