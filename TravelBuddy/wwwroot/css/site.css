@@ -107,3 +107,10 @@ footer {
     font-family: 'Permanent Marker', cursive;
     padding-left: 35px;
 }
+
+.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+}

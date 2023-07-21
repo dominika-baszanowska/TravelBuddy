@@ -87,7 +87,7 @@
     
     @if (_createTripVisible)
     {
-                <div class="container">
+        <div class="container">
             <div class="row justify-content-center mt-5">
                 <div class="col-md-6">
                     <h1 class="text-center mb-4">Book your guide in @_cityName!</h1>
@@ -118,6 +118,57 @@
             </div>
         </div>
     }
+    
+    @if (_tripSuccessVisible)
+    {
+        <div class="container">
+            <div class="row justify-content-center mt-5">
+                <div class="col-md-6">
+                    <h1 class="text-center mb-4">Pack your bags!!!</h1>
+                    <h2 class="text-center mb-4">You're going to @_cityName! <span class="@_selectedCountry.Flag"></span></h2>
+                    <div class="card">
+                        <div class="card-body">
+                            <p class="p-list-item">Trip Summary</p>
+                            <div class="form-group mb-3">
+                                <img src="@_selectedGuide.User.ProfilePicture" alt="Guide Profile Picture" style="width: 150px; height: 150px; border: solid black 2px;" class="center"/>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="guide">Guide <p class="p-list-item" style="color: orange;">&#9733 @_selectedGuide.Rating</p></label>
+                                <input type="text" class="form-control" id="guide" @bind="_guideName" disabled>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="country">Country <p class="p-list-item" style="color: orange">&#9733 @_selectedCountry.Rating</p></label>
+                                <input type="text" class="form-control" id="country" @bind="_countryName" disabled>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="city">City</label>
+                                <input type="text" class="form-control" id="city" @bind="_cityName" disabled>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="startDate">Start Date</label>
+                                <input type="date" class="form-control" id="startDate" @bind="StartDate" disabled>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="endDate">End Date</label>
+                                <input type="date" class="form-control" id="endDate" @bind="EndDate" disabled>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="price">Guide Price @_selectedGuide.CurrencyIso</label>
+                                <input type="text" class="form-control" id="price" @bind="_tripPrice" disabled>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="comments">Comments</label>
+                                <input type="text" class="form-control" id="comments" @bind="_comments" disabled>
+                            </div>
+                            <div class="d-grid gap-2">
+                                <button type="button" class="btn btn-primary" onclick="location.href=''">Homepage</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
 </div>
   
   &nbsp;
@@ -130,6 +181,7 @@
     bool _citiesVisible = false;
     bool _guidesVisible = false;
     bool _createTripVisible = false;
+    bool _tripSuccessVisible = false;
     
     List<City> _cities = new();
     List<Guide> _guides = new();
@@ -137,7 +189,10 @@
     string _cityName = string.Empty;
     int _cityId;
 
+    string _guideName;
+
     Guide _selectedGuide;
+    Country _selectedCountry;
 
     private DateTime _startDate = DateTime.Now;
     DateTime StartDate
@@ -167,6 +222,8 @@
 
     void FindCities(Country country)
     {
+        _selectedCountry = country;
+        
         _cities = CityService.GetCities(country.Id);
 
         _countryName = country.Name;
@@ -198,7 +255,12 @@
 
     void CreateTripWithGuideDetails()
     {
-        var trip = TripService.CreateTrip(1002, _selectedGuide.UserId, _cityId, StartDate, _endDate, _comments);
+        TripService.CreateTrip(1002, _selectedGuide.UserId, _cityId, StartDate, _endDate, _comments);
+
+        _guideName = $"{_selectedGuide.User.FirstName} {_selectedGuide.User.LastName}";
+        
+        _createTripVisible = false;
+        _tripSuccessVisible = true;
     }
 
     void CalculateGuidePrice()
