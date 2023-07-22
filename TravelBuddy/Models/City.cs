@@ -22,4 +22,5 @@ public class City
     
     // Navigational properties
     public Country Country { get; set; }
+    public ICollection<Trip> Trips { get; set; }
 }

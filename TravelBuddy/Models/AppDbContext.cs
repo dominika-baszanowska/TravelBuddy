@@ -39,6 +39,18 @@ namespace TravelBuddy.Models
                 .HasForeignKey(t => t.GuideId)
                 .OnDelete(DeleteBehavior.Restrict);
             
+            modelBuilder.Entity<Trip>()
+                .HasOne(t => t.Country)
+                .WithMany(g => g.Trips)
+                .HasForeignKey(t => t.CountryId)
+                .OnDelete(DeleteBehavior.Restrict);
+            
+            modelBuilder.Entity<Trip>()
+                .HasOne(t => t.City)
+                .WithMany(g => g.Trips)
+                .HasForeignKey(t => t.CityId)
+                .OnDelete(DeleteBehavior.Restrict);
+
             modelBuilder.Entity<City>()
                 .HasOne(c => c.Country)
                 .WithMany(c => c.Cities)

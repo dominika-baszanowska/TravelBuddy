@@ -27,5 +27,7 @@ public class Country
     
     public float Rating { get; set; }
     
+    // nav
     public List<City> Cities { get; set; }
+    public ICollection<Trip> Trips { get; set; }
 }

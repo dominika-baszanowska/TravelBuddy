@@ -14,6 +14,9 @@ public class GuideService
         _context = context;
     }
 
+    public Guide GetGuide(int guideId) =>
+        _context.Guides.Single(x => x.UserId == guideId);
+    
     public List<Guide> GetAllGuidesAsync() => 
         _context.Guides.ToList();
 

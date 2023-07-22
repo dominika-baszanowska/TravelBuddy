@@ -272,7 +272,7 @@
 
     void CreateTripWithGuideDetails()
     {
-        TripService.CreateTrip(1002, _selectedGuide.UserId, _cityId, StartDate, _endDate, _comments);
+        TripService.CreateTrip(1002, _selectedGuide.UserId, _cityId, StartDate, _endDate, _comments, _tripPrice, _selectedCountry.Id);
 
         _guideName = $"{_selectedGuide.User.FirstName} {_selectedGuide.User.LastName}";
         

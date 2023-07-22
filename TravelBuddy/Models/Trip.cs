@@ -28,8 +28,21 @@ public class Trip
     public string? Review { get; set; }
 
     public float? Rating { get; set; }
+    
+    [Required]
+    public decimal Price { get; set; }
+    
+    [Required]
+    [ForeignKey("Country")]
+    public int CountryId { get; set; }
+    
+    [Required]
+    [ForeignKey("City")]
+    public int CityId { get; set; }
 
     // Navigational properties
     public User User { get; set; }
     public Guide Guide { get; set; }
+    public Country Country { get; set; }
+    public City City { get; set; }
 }
