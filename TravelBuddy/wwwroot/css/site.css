@@ -71,6 +71,34 @@ body, html {
     background-size: cover;
 }
 
+.faded-image-3 {
+    position: relative;
+    width: 100%;
+    height: 30vh;
+    background-image:
+            linear-gradient(
+                    rgba(0, 0, 0, 0.2),
+                    rgba(0, 0, 0, 0.2)
+            ),
+            url('stock/pexels-matheus-bertelli-12446334.jpg');
+    background-position: center;
+    background-size: cover;
+}
+
+.faded-image-4 {
+    position: relative;
+    width: 100%;
+    height: 50vh;
+    background-image:
+            linear-gradient(
+                    rgba(0, 0, 0, 0.2),
+                    rgba(0, 0, 0, 0.2)
+            ),
+            url('stock/pexels-chait-goli-1796736.jpg');
+    background-position: center;
+    background-size: cover;
+}
+
 .faded-image-text {
     position: absolute;
     top: 50%;
