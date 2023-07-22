@@ -1,12 +1,11 @@
 ﻿@page "/CreateTrip"
 @using TravelBuddy.Logic
 @using TravelBuddy.Models
-@using TravelBuddy.Shared
+@using System.Globalization
 @inject CityService CityService
 @inject CountryService CountryService
 @inject GuideService GuideService
 @inject TripService TripService
-@inject AppDbContext AppDbContext
 
 <style>
     .p-list-item {
@@ -67,47 +66,20 @@
     @if (_guidesVisible)
     {
         <div id="guide_div" class="container">
-
-            <!--
-            <div style="height: 900px; overflow-y: auto;">
-                <table class="table table-striped">
-                    <thead>
-                    <tr>
-                        <th>Profile Picture</th>
-                        <th>Rating</th>
-                        <th>First Name</th>
-                        <th>Last Name</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @foreach (var guide in _filteredGuides)
-                    {
-                        <tr @onclick="() => ShowCreateTrip(guide)">
-                            <td><img src="@guide.User.ProfilePicture" alt="Guide Profile Picture" style="width: 40px; height: 40px; border: solid black 2px;"/></td>
-                            <td><p class="p-list-item" style="color: orange">&#9733 @guide.Rating</p></td>
-                            <td><p class="p-list-item">@guide.User.FirstName</p></td>
-                            <td><p class="p-list-item">@guide.User.LastName</p></td>
-                        </tr>
-                    }
-                    </tbody>
-                </table>
-            </div>
-            -->
-            
             <h2>Perfect! Now choose your guide in @_cityName!</h2>
             <div class="form-group mb-3">
                 <input type="text" class="form-control" @bind="SearchTerm" placeholder="Search guides...">
             </div>
-            
             <div style="height: 900px; overflow-y: auto;">
                 <ul class="list-group guide_list">
                     @{
                         foreach (var guide in _filteredGuides)
                         {
-                            <li class="list-group-item" @onclick="() => ShowCreateTrip(guide)">
+                            <li class="list-group-item" style="display: flex; justify-content: space-between; align-items: center;" @onclick="() => ShowCreateTrip(guide)">
                                 <img src="@guide.User.ProfilePicture" alt="Guide Profile Picture" style="width: 40px; height: 40px; border: solid black 2px;"/>
                                 <p class="p-list-item" style="color: orange">&#9733 @guide.Rating</p>
                                 <p class="p-list-item">@guide.User.FirstName @guide.User.LastName</p>
+                                <p class="p-list-item" style="margin-left: auto;">@guide.Speciality</p>
                             </li>
                         }
                     }
@@ -325,7 +297,9 @@
     {
         _filteredGuides = _guides
             .Where(guide => guide.User.FirstName.Contains(_searchTerm, StringComparison.OrdinalIgnoreCase) ||
-                            guide.User.LastName.Contains(_searchTerm, StringComparison.OrdinalIgnoreCase))
+                            guide.User.LastName.Contains(_searchTerm, StringComparison.OrdinalIgnoreCase) ||
+                            guide.Rating.ToString(CultureInfo.InvariantCulture).Contains(_searchTerm, StringComparison.OrdinalIgnoreCase) ||
+                            (guide.Speciality ?? string.Empty).Contains(_searchTerm, StringComparison.OrdinalIgnoreCase))
             .ToList();
     }
     
