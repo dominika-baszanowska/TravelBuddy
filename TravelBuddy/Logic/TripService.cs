@@ -22,17 +22,14 @@ public class TripService
 
     public List<TripViewModel> GetUserTrips(int userId)
     {
-        var readyTrips = new List<TripViewModel>();
-        
         var trips = _dbContext.Trips.Where(x => x.UserId == userId).ToList();
-        
-        foreach (var trip in trips)
-        {
-            var guide = _guideService.GetGuide(trip.GuideId);
-            var user = _userService.GetUser(trip.GuideId);
-            
-            var model = new TripViewModel
+
+        return (from trip in trips
+            let guide = _guideService.GetGuide(trip.GuideId)
+            let user = _userService.GetUser(trip.GuideId)
+            select new TripViewModel
             {
+                Id = trip.Id,
                 ProfilePicture = user.ProfilePicture,
                 GuideFirstName = user.FirstName,
                 GuideLastName = user.LastName,
@@ -40,12 +37,7 @@ public class TripService
                 StartDate = trip.StartDate,
                 EndDate = trip.EndDate,
                 Rating = trip.Rating
-            };
-            
-            readyTrips.Add(model);
-        }
-
-        return readyTrips;
+            }).ToList();
     }
 
     public Trip CreateTrip(int userId, int guideId, int cityId, DateTime startDate, DateTime endDate, 
@@ -67,6 +59,15 @@ public class TripService
         _dbContext.SaveChanges();
 
         return trip;
+    }
+
+    public void UpdateTripRating(int tripId, float tripRating)
+    {
+        var trip = _dbContext.Trips.Single(x => x.Id == tripId);
+
+        trip.Rating = tripRating;
+
+        _dbContext.SaveChanges();
     }
 
     public void DeleteTrip(int tripId) =>

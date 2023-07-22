@@ -1,5 +1,6 @@
 ﻿@page "/User"
 @using TravelBuddy.Logic
+@using TravelBuddy.Models
 @using TravelBuddy.Shared
 @inject UserService UserService
 @inject TripService TripService
@@ -18,9 +19,9 @@
 </style>
 
 <div class="main_container">
-    <div class="container">
+    <div>
         <div class="row justify-content-center mt-5">
-            <div class="col-md-6">
+            <div class="col-md-6" style="width: 600px">
                 <h1 class="text-center mb-4 travel-heading">Welcome @_firstName!</h1>
                 <div class="card">
                     <div class="card-body">
@@ -38,7 +39,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-6" style="width: 1000px">
                 <h1 class="text-center mb-4 travel-heading">Your Trips</h1>
                 <div class="card">
                     <div class="card-body">
@@ -46,13 +47,12 @@
                             <thead>
                                 <tr>
                                     <th>Profile Picture</th>
-                                    <th>Rating</th>
-                                    <th>First Name</th>
-                                    <th>Last Name</th>
+                                    <th>Guide Rating</th>
+                                    <th>Guide Name</th>
                                     <th>Start Date</th>
                                     <th>End Date</th>
-                                    <th>Guide Rating</th>
-                                    <!-- Add more columns here as needed -->
+                                    <th>Rating</th>
+                                    <th>Review</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -60,12 +60,12 @@
                                 {
                                     <tr>
                                         <td><img src="@trip.ProfilePicture" alt="Guide Profile Picture" style="width: 40px; height: 40px; border: solid black 2px;" /></td>
-                                        <td>@trip.Rating</td>
-                                        <td>@trip.GuideFirstName</td>
-                                        <td>@trip.GuideLastName</td>
+                                        <td><p style="color: orange;">&#9733 @trip.GuideRating</p></td>
+                                        <td>@trip.GuideFirstName @trip.GuideLastName</td>
                                         <td>@trip.StartDate.ToShortDateString()</td>
                                         <td>@trip.EndDate.ToShortDateString()</td>
-                                        <td>@trip.GuideRating</td>
+                                        <td><p style="color: orange;">&#9733 @trip.Rating</p></td>
+                                        <td><a class="btn btn-primary btn-lg" @onclick="() => ReviewTrip(trip.Id, trip.Rating ?? 0)" role="button">Review</a></td>
                                     </tr>
                                 }
                             </tbody>
@@ -89,7 +89,7 @@
     private string _registrationDate;
 
     List<TripViewModel> _userTrips;
-    
+
     void GetUser(int userId)
     {
         var user = UserService.GetUser(userId);
@@ -107,4 +107,6 @@
         _userTrips = TripService.GetUserTrips(userId);
     }
 
+    void ReviewTrip(int tripId, float tripRating) => 
+        TripService.UpdateTripRating(tripId, tripRating);
 }

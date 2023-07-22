@@ -2,6 +2,7 @@
 
 public class TripViewModel
 {
+    public int Id { get; set; }
     
     public string ProfilePicture { get; set; }
     
