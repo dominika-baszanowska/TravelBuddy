@@ -67,11 +67,42 @@
     @if (_guidesVisible)
     {
         <div id="guide_div" class="container">
+
+            <!--
+            <div style="height: 900px; overflow-y: auto;">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>Profile Picture</th>
+                        <th>Rating</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach (var guide in _filteredGuides)
+                    {
+                        <tr @onclick="() => ShowCreateTrip(guide)">
+                            <td><img src="@guide.User.ProfilePicture" alt="Guide Profile Picture" style="width: 40px; height: 40px; border: solid black 2px;"/></td>
+                            <td><p class="p-list-item" style="color: orange">&#9733 @guide.Rating</p></td>
+                            <td><p class="p-list-item">@guide.User.FirstName</p></td>
+                            <td><p class="p-list-item">@guide.User.LastName</p></td>
+                        </tr>
+                    }
+                    </tbody>
+                </table>
+            </div>
+            -->
+            
             <h2>Perfect! Now choose your guide in @_cityName!</h2>
+            <div class="form-group mb-3">
+                <input type="text" class="form-control" @bind="SearchTerm" placeholder="Search guides...">
+            </div>
+            
             <div style="height: 900px; overflow-y: auto;">
                 <ul class="list-group guide_list">
                     @{
-                        foreach (var guide in _guides)
+                        foreach (var guide in _filteredGuides)
                         {
                             <li class="list-group-item" @onclick="() => ShowCreateTrip(guide)">
                                 <img src="@guide.User.ProfilePicture" alt="Guide Profile Picture" style="width: 40px; height: 40px; border: solid black 2px;"/>
@@ -170,8 +201,8 @@
         </div>
     }
 </div>
-  
-  &nbsp;
+
+&nbsp;
   &nbsp;
   
 
@@ -185,6 +216,19 @@
     
     List<City> _cities = new();
     List<Guide> _guides = new();
+    
+    List<Guide> _filteredGuides; // The filtered list based on the search term
+    string _searchTerm = string.Empty;
+    string SearchTerm
+    {
+        get => _searchTerm;
+        set
+        {
+            _searchTerm = value;
+            OnSearchTermChanged();
+        }
+    }
+
     string _countryName = string.Empty;
     string _cityName = string.Empty;
     int _cityId;
@@ -235,7 +279,8 @@
     void FindGuides(City city)
     {
         _guides = GuideService.GetNearbyGuides(city.Latitude, city.Longitude, 100000);
-
+        _filteredGuides = _guides;
+        
         _cityId = city.Id;
         _cityName = city.Name;
         
@@ -274,5 +319,18 @@
         var result = days * _selectedGuide.PricePerHour * 4;
         
         _tripPrice = result < 0 ? 0 : result;
+    }
+    
+    private void UpdateFilteredGuides()
+    {
+        _filteredGuides = _guides
+            .Where(guide => guide.User.FirstName.Contains(_searchTerm, StringComparison.OrdinalIgnoreCase) ||
+                            guide.User.LastName.Contains(_searchTerm, StringComparison.OrdinalIgnoreCase))
+            .ToList();
+    }
+    
+    private void OnSearchTermChanged()
+    {
+        UpdateFilteredGuides();
     }
 }

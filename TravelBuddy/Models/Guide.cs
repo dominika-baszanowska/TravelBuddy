@@ -30,6 +30,8 @@ public class Guide
     public decimal Latitude { get; set; }
 
     public decimal Longitude { get; set; }
+    
+    public string? Speciality { get; set; }
 
     // Navigational properties
     public User User { get; set; }
