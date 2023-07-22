@@ -1,16 +1,25 @@
 ﻿@page "/User"
 @using TravelBuddy.Logic
 @inject UserService UserService
+@inject TripService TripService
+@inject GuideService GuideService
 
 @{
     GetUser(1002);
 }
 
+<style>
+    p{
+     color: black;
+     font-size: 18px;
+    }
+</style>
+
 <div class="main_container">
     <div class="container">
         <div class="row justify-content-center mt-5">
             <div class="col-md-6">
-                <h1 class="text-center mb-4">Welcome @_firstName!</h1>
+                <h1 class="text-center mb-4 travel-heading">Welcome @_firstName!</h1>
                 <div class="card">
                     <div class="card-body">
                         <div class="col-md-4">
@@ -24,6 +33,15 @@
                         <div class="d-grid gap-2">
                             <button type="button" class="btn btn-primary" onclick="location.href='Login'">Save Changes</button>
                         </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <h1 class="text-center mb-4 travel-heading">Your Trips</h1>
+                <div class="card">
+                    <div class="card-body">
+
+                        
                     </div>
                 </div>
             </div>
@@ -42,6 +60,7 @@
     private string _profilePicture;
     private string _registrationDate;
     
+    
     void GetUser(int userId)
     {
         var user = UserService.GetUser(userId);
@@ -52,6 +71,16 @@
         _phoneNumber = user.PhoneNumber;
         _profilePicture = user.ProfilePicture;
         _registrationDate = user.CreatedAt.ToLocalTime().Date.ToShortDateString();
+    }
+
+    void GetTrips(int userId)
+    {
+        var trips = TripService.GetUserTrips(userId);
+
+        foreach (var trip in trips)
+        {
+            
+        }
     }
 
 }

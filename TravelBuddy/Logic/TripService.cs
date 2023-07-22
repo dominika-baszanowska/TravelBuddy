@@ -15,6 +15,9 @@ public class TripService
     public Trip GetTrip(int tripId) =>
         _dbContext.Trips.Single(x => x.Id == tripId);
 
+    public List<Trip> GetUserTrips(int userId) =>
+        _dbContext.Trips.Where(x => x.UserId == userId).ToList();
+
     public Trip CreateTrip(int userId, int guideId, int cityId, DateTime startDate, DateTime endDate, 
         string comments)
     {
