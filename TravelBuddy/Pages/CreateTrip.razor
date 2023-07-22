@@ -18,13 +18,14 @@
     }
 </style>
 
+<div class="faded-image-5"></div>
 <div class="main_container">
     
     @if (_countriesVisible)
     {
         <div id="country_div" class="container">
             <h2>Where would you like to go?</h2>
-            <div style="height: 900px; overflow-y: auto;">
+            <div style="height: 700px; overflow-y: auto;">
                 <p class="lead">Select a destination country:</p>
                 <ul class="list-group country_list">
                     @{
@@ -48,7 +49,7 @@
     {
         <div id="city_div" class="container">
             <h2>Choose one of these most popular destinations in @_countryName!</h2>
-            <div style="height: 900px; overflow-y: auto;">
+            <div style="height: 700px; overflow-y: auto;">
                 <ul class="list-group city_list">
                     @{
                         foreach (var city in _cities)
@@ -70,7 +71,7 @@
             <div class="form-group mb-3">
                 <input type="text" class="form-control" @bind="SearchTerm" placeholder="Search guides...">
             </div>
-            <div style="height: 900px; overflow-y: auto;">
+            <div style="height: 700px; overflow-y: auto;">
                 <ul class="list-group guide_list">
                     @{
                         foreach (var guide in _filteredGuides)
@@ -175,8 +176,7 @@
 </div>
 
 &nbsp;
-  &nbsp;
-  
+&nbsp;
 
 @code {
 
@@ -288,7 +288,7 @@
         
         if (days == 0 || _selectedGuide.PricePerHour == 0 || _selectedGuide.IsVolunteer) _tripPrice = 0;
 
-        var result = days * _selectedGuide.PricePerHour * 4;
+        var result = days * _selectedGuide.PricePerHour * 4 / 10;
         
         _tripPrice = result < 0 ? 0 : result;
     }
